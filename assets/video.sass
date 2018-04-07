@@ -1,0 +1,20 @@
+.video-wrapper
+    position: relative
+    background-color: black
+
+    video
+        width: 100%
+        height: auto
+        display: block
+        margin: 0 auto
+        &::-webkit-media-controls-enclosure
+            display: none !important
+    svg
+        top: 0
+        position: absolute
+        background: transparent
+        z-index: 2147483647
+        width: inherit
+        height: inherit
+
+        @import "svg.sass"

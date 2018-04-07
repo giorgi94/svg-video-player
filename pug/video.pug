@@ -1,0 +1,22 @@
+mixin video(id, src)
+    .video-container
+        div(id=id).video-wrapper
+            video
+                source(src=src, type='video/mp4')
+            svg
+                g.bottom-controls
+                    g.play--group
+                        rect.btn--play
+                        //- polygon.btn.play(points='17 0, 0 10, 0 -10')
+                    
+                    g.progress--group
+                        rect.progress--panel
+                    
+                    g.time--group
+                        rect.btn--time
+                        text.text--time(text-anchor="middle", alignment-baseline="central")
+                    
+                    g.fullscreen--group
+                        rect.btn--fullscreen
+            
+            
