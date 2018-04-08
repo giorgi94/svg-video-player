@@ -64,6 +64,7 @@ SVGVideoPlayer::resize = ->
 
 SVGVideoPlayer::events = ->
     @buttons.play.addEventListener 'click', @play.bind(this)
+    @video.addEventListener 'timeupdate', @timeUpdate.bind(this)
 
 
 SVGVideoPlayer::play = ->
@@ -95,7 +96,7 @@ SVGVideoPlayer::seconds_to_time = (seconds) ->
         seconds = '0' + seconds
     return minutes + ':' + seconds
 
-
+# SVGVideoPlayer::timeUpdate = ->
 
 
 

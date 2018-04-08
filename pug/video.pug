@@ -1,3 +1,8 @@
+- var play_icon_height = 20 
+- var play_icon_width = 18
+- var play_icon_distance = 2
+- var play_polygon_points = "0 h, 0 -h, w 0, w 0".replace(/h/g, play_icon_height/2).replace(/w/g, play_icon_width)
+
 mixin video(id, src)
     .video-container
         div(id=id).video-wrapper
@@ -7,7 +12,8 @@ mixin video(id, src)
                 g.bottom-controls
                     g.play--group
                         rect.btn--play
-                        //- polygon.btn.play(points='17 0, 0 10, 0 -10')
+                        g.paly--icon--group
+                            polygon(points=play_polygon_points)
                     
                     g.progress--group
                         rect.progress--panel
