@@ -25,12 +25,6 @@
     height: $btn_time_hight
     transform: translate(calc(100% - #{$btn_time_width + $btn_margin_inner + $btn_margin_outer + $btn_default_width}), ($btn_default_hight - $btn_time_hight) / 2)
 
-.progress--panel
-    @extend %btn
-    height: $progress_panel_height
-    width: calc(100% - #{2*$btn_default_width + $btn_time_width + 2*$btn_margin_outer + 3*$btn_margin_inner})
-    transform: translate($btn_default_width + $btn_margin_outer + $btn_margin_inner, ($btn_default_hight - $progress_panel_height) / 2)
-
 
 .text--time
     fill: #fff
@@ -42,6 +36,28 @@
     transform: translate(calc(100% - #{$btn_time_width + $btn_margin_inner + $btn_margin_outer + $btn_default_width - $btn_time_width/2}), $btn_default_hight/2)
 
 
+.progress--panel
+    @extend %btn
+    height: $progress_panel_height
+    width: calc(100% - #{2*$btn_default_width + $btn_time_width + 2*$btn_margin_outer + 3*$btn_margin_inner})
+    transform: translate($btn_default_width + $btn_margin_outer + $btn_margin_inner, ($btn_default_hight - $progress_panel_height) / 2)
+
+.progress--line
+    &:hover
+        fill: $progressHoverColor
+
+    fill: $progressColor
+    cursor: pointer
+    transition: fill 200ms
+
+    height: $progress_line_height
+    width: 100px
+
+    transform: translate($btn_default_width + $btn_margin_outer + $btn_margin_inner, ($btn_default_hight - $progress_line_height) / 2)
+
+
+
+// button polygons
 .paly--icon--group
     polygon
         fill: #fff

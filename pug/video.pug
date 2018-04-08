@@ -1,9 +1,15 @@
 - var play_polygon_height = 20 
 - var play_polygon_width = 18
-- var play_polygon_points = "0 h, 0 -h, w 0, w 0".replace(/h/g, play_polygon_height/2).replace(/w/g, play_polygon_width)
 - var pause_polygon_distance = 5
+
+- var play_polygon_points = "0 h, 0 -h, w 0, w 0".replace(/h/g, play_polygon_height/2).replace(/w/g, play_polygon_width)
+
 - var pause_polygon_points_left = "0 h, 0 -h, w -h, w h".replace(/h/g, play_polygon_height/2).replace(/w/g, (play_polygon_width - pause_polygon_distance)/2)
+
 - var pause_polygon_points_right = "w h, w -h, v -h, v h".replace(/h/g, play_polygon_height/2).replace(/v/g, (play_polygon_width + pause_polygon_distance)/2).replace(/w/g, play_polygon_width)
+
+// - var 
+- var current_time_polygon = "0 0, 0 -h, w 0, w 0"
 
 //- id="animation-to-check" begin="indefinite" fill="freeze" attributeName="points" dur="500ms" to=""
 
@@ -28,6 +34,9 @@ mixin video(id, src)
                     g.progress--group
                         rect.progress--panel
                         rect.progress--line
+                        g.current--time--group
+                            polygon(points=pause_polygon_points_right)
+                            text.text--time(text-anchor="middle", alignment-baseline="central")
                     
                     g.time--group
                         rect.btn--time

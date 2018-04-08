@@ -13,6 +13,7 @@ SVGVideoPlayer = (wrapper) ->
         progress:
             group: @svg.querySelector('.progress--group')
             panel: @svg.querySelector('.progress--panel')
+            line: @svg.querySelector('.progress--line')
         fullscreen: @svg.querySelector('.fullscreen--group')
 
 
@@ -109,12 +110,26 @@ SVGVideoPlayer::seconds_to_time = (seconds) ->
     return minutes + ':' + seconds
 
 SVGVideoPlayer::timeUpdate = ->
-    8
+    percentage = @video.currentTime / @video.duration
+    panel_rect = @buttons.progress.panel.getBoundingClientRect()
+    width = parseInt percentage * panel_rect.width
+    @buttons.progress.line.style.width = "#{width}px"
+
+
+    # this.current.innerText = this.secondstoTime(this.video.currentTime)
 
 
 
 
-
+SVGVideoPlayer::changeSource = (src)->
+    if not @video.paused
+        @video.pause()
+    if @video.currentTime > 0
+        @video.currentTime = 0
+    source = @video.querySelector('source')
+    source.setAttribute('src', src)
+    @video.load()
+    @set_duration()
 
 
 
