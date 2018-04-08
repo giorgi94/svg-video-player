@@ -1,19 +1,4 @@
-$btnColor: rgba(35, 35, 35, 0.75)
-$btnHoverColor: rgba(35, 35, 35, 1)
-
-$btn_default_width: 45px
-$btn_default_hight: 45px
-
-$btn_time_width: $btn_default_width + 10px
-$btn_time_hight: $btn_default_hight - 10px
-
-$progress_panel_height:  $btn_default_hight - 25px
-
-$play_icon_height: 20px
-$play_icon_width: 18px
-
-$btn_margin_outer: 10px
-$btn_margin_inner: 5px
+@import "variables.sass"
 
 %btn
     fill: $btnColor
@@ -60,4 +45,5 @@ $btn_margin_inner: 5px
 .paly--icon--group
     polygon
         fill: #fff
-    transform: translate($btn_margin_outer + ($btn_default_width - $play_icon_width)/2, $btn_default_hight/2)
+        cursor: pointer
+    transform: translate($btn_margin_outer + ($btn_default_width - $play_polygon_width)/2, $btn_default_hight/2)

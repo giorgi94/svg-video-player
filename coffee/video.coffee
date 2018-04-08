@@ -70,14 +70,26 @@ SVGVideoPlayer::events = ->
 SVGVideoPlayer::play = ->
     if @video.paused
         @video.play()
+        @toggle_play_animation('play')
     else
         @video.pause()
+        @toggle_play_animation('pause')
 
 SVGVideoPlayer::pause = ->
     if not @video.paused
         @video.pause()
+        @toggle_play_animation('pause')
 
+SVGVideoPlayer::toggle_play_animation = (mode)->
+    btn = @buttons.play
 
+    if mode == 'pause'
+        anims = btn.querySelectorAll('.animate-to-play')
+        for anim in anims
+            anim.beginElement()
+    else
+        btn.querySelector('.animate-to-pause-right').beginElement()
+        btn.querySelector('.animate-to-pause-left').beginElement()
 
 SVGVideoPlayer::set_duration = ->
     if isNaN(@video.duration)
@@ -96,7 +108,8 @@ SVGVideoPlayer::seconds_to_time = (seconds) ->
         seconds = '0' + seconds
     return minutes + ':' + seconds
 
-# SVGVideoPlayer::timeUpdate = ->
+SVGVideoPlayer::timeUpdate = ->
+    8
 
 
 
