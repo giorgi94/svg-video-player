@@ -1,5 +1,20 @@
 @import "variables.sass"
 
+
+
+
+.bottom-controls
+    height: $btn_default_hight
+    opacity: 0
+    transition: opacity 500ms
+    &:hover
+        opacity: 1
+
+.placeholder
+    opacity: 0
+    width: inherit
+    height: inherit
+
 %default_panel
     fill: $color
     cursor: pointer
@@ -48,9 +63,9 @@
 
 .progress--line
     &:hover
-        fill: $progressHoverColor
+        fill: $progress_hover_color
 
-    fill: $progressColor
+    fill: $progress_color
     cursor: pointer
     transition: fill 200ms
 

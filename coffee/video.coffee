@@ -30,8 +30,8 @@ SVGVideoPlayer::init = ->
     @video.addEventListener 'canplay', @resize.bind(this)
 
     @svg.addEventListener 'click', ((event)->
-        if event.target.tagName == 'svg'
-            @play()
+        if event.target.tagName == 'svg' then @play()
+        # console.log event.offsetX
         ).bind(this)
 
 
@@ -60,6 +60,7 @@ SVGVideoPlayer::resize = ->
     rect = @el.getBoundingClientRect()
     @svg.setAttribute 'viewBox', "0 0 #{rect.width} #{rect.height}"
     @bottomGroup.style.transform = "translateY(#{rect.height - 55}px)"
+    @bottomGroup.style.width = "#{rect.width}px"
     @buttons.progress.panel.style.width = "#{rect.width - (2*@const.btn_default_width + @const.btn_time_width + 2*@const.margin_outer + 3*@const.margin_inner)}px"
 
 
@@ -71,7 +72,7 @@ SVGVideoPlayer::events = ->
     @buttons.progress.group.addEventListener 'click', @progress_clicked.bind(this)
 
 
-SVGVideoPlayer::play = ->
+SVGVideoPlayer::play = (event)->
     if @video.paused
         @video.play()
         @toggle_play_animation('play')
@@ -95,6 +96,12 @@ SVGVideoPlayer::toggle_play_animation = (mode)->
         btn.querySelector('.animate-to-pause-right').beginElement()
         btn.querySelector('.animate-to-pause-left').beginElement()
 
+SVGVideoPlayer::check_play_animation = (event)->
+    if @video.paused
+        @toggle_play_animation('play')
+    else
+        @toggle_play_animation('pause')
+
 SVGVideoPlayer::set_duration = ->
     if isNaN(@video.duration)
         setTimeout((()=>@set_duration()), 20);
@@ -114,29 +121,31 @@ SVGVideoPlayer::seconds_to_time = (seconds) ->
         minutes = '0' + minutes
     if seconds<10
         seconds = '0' + seconds
-
-    if hours > 0
-        if hours<10
-            hours = '0' + hours
-        return hours + ':' + minutes + ':' + seconds
-    return minutes + ':' + seconds
+    if hours<10
+        hours = '0' + hours
+    return hours + ':' + minutes + ':' + seconds
 
 
 SVGVideoPlayer::timeUpdate = ->
     percentage = @video.currentTime / @video.duration
+    if percentage == 1
+        @video.currentTime = 0
+        @toggle_play_animation('pause')
+        return "end"
+
     panel_rect = @buttons.progress.panel.getBoundingClientRect()
     width = parseInt percentage * panel_rect.width
+    if isNaN width
+        width = 0
     @buttons.progress.line.style.width = "#{width}px"
-
     @buttons.time.text_current.innerHTML = @seconds_to_time(this.video.currentTime)
 
 
 SVGVideoPlayer::progress_clicked = (event) ->
     rect = @buttons.progress.group.getBoundingClientRect()
     svg_rect = @svg.getBoundingClientRect()
-    # this.video.currentTime = @video.duration * event.offsetX / @buttons.progress.group.offsetWidth;
-    console.log @video.duration * (event.offsetX-svg_rect.x) / rect.width
-    # console.log event.offsetX - rect.x
+    @video.currentTime = (@video.duration *
+        (event.offsetX - rect.left + svg_rect.left) / rect.width)
 
 
 SVGVideoPlayer::changeSource = (src)->
@@ -148,6 +157,8 @@ SVGVideoPlayer::changeSource = (src)->
     source.setAttribute('src', src)
     @video.load()
     @set_duration()
+    @check_play_animation()
+
 
 
 
