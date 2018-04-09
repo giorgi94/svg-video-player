@@ -8,7 +8,7 @@ SVGVideoPlayer = (wrapper) ->
     @buttons =
         play: @svg.querySelector('.play--group')
         time:
-            rect: @svg.querySelector('.btn--time')
+            rect: @svg.querySelector('.time--rect')
             text: @svg.querySelector('.text--time')
         progress:
             group: @svg.querySelector('.progress--group')
@@ -49,8 +49,8 @@ SVGVideoPlayer::set_constants = ->
     fullscreen_rect = @buttons.fullscreen.getBoundingClientRect()
 
     @const =
-        btn_margin_outer: play_rect.x - svg_rect.x
-        btn_margin_inner: fullscreen_rect.x - time_rect.x - time_rect.width
+        margin_outer: play_rect.x - svg_rect.x
+        margin_inner: fullscreen_rect.x - time_rect.x - time_rect.width
         btn_time_width: time_rect.width
         btn_default_width: play_rect.width
 
@@ -59,7 +59,7 @@ SVGVideoPlayer::resize = ->
     rect = @el.getBoundingClientRect()
     @svg.setAttribute 'viewBox', "0 0 #{rect.width} #{rect.height}"
     @bottomGroup.style.transform = "translateY(#{rect.height - 55}px)"
-    @buttons.progress.panel.style.width = "#{rect.width - (2*@const.btn_default_width + @const.btn_time_width + 2*@const.btn_margin_outer + 3*@const.btn_margin_inner)}px"
+    @buttons.progress.panel.style.width = "#{rect.width - (2*@const.btn_default_width + @const.btn_time_width + 2*@const.margin_outer + 3*@const.margin_inner)}px"
 
 
 
@@ -102,12 +102,22 @@ SVGVideoPlayer::set_duration = ->
 SVGVideoPlayer::seconds_to_time = (seconds) ->
     minutes = Math.floor(seconds/60)
     seconds = Math.round(seconds-60*minutes)
+    hours = Math.floor(minutes/60)
+
+    if hours > 0
+        minutes = Math.round(minutes-60*hours)
 
     if minutes<10
         minutes = '0' + minutes
     if seconds<10
         seconds = '0' + seconds
+
+    if hours > 0
+        if hours<10
+            hours = '0' + hours
+        return hours + ':' + minutes + ':' + seconds
     return minutes + ':' + seconds
+
 
 SVGVideoPlayer::timeUpdate = ->
     percentage = @video.currentTime / @video.duration

@@ -1,29 +1,29 @@
 @import "variables.sass"
 
-%btn
-    fill: $btnColor
+%default_panel
+    fill: $Color
     cursor: pointer
     transition: fill 200ms
 
     &:hover
-        fill: $btnHoverColor
+        fill: $hover_Color
 
-.btn--play
-    @extend %btn
+.play--rect
+    @extend %default_panel
     width: $btn_default_width
     height: $btn_default_hight
-    transform: translateX($btn_margin_outer)
+    transform: translateX($margin_outer)
 
-.btn--fullscreen
-    @extend .btn--play
-    transform: translateX(calc(100% - #{$btn_default_width + $btn_margin_outer}))
+.fullscreen--rect
+    @extend .play--rect
+    transform: translateX(calc(100% - #{$btn_default_width + $margin_outer}))
 
-.btn--time
-    @extend %btn
+.time--rect
+    @extend %default_panel
     cursor: default
     width: $btn_time_width
     height: $btn_time_hight
-    transform: translate(calc(100% - #{$btn_time_width + $btn_margin_inner + $btn_margin_outer + $btn_default_width}), ($btn_default_hight - $btn_time_hight) / 2)
+    transform: translate(calc(100% - #{$btn_time_width + $margin_inner + $margin_outer + $btn_default_width}), ($btn_default_hight - $btn_time_hight) / 2)
 
 
 .text--time
@@ -33,14 +33,14 @@
         family: monospace
     pointer-events: none
 
-    transform: translate(calc(100% - #{$btn_time_width + $btn_margin_inner + $btn_margin_outer + $btn_default_width - $btn_time_width/2}), $btn_default_hight/2)
+    transform: translate(calc(100% - #{$btn_time_width + $margin_inner + $margin_outer + $btn_default_width - $btn_time_width/2}), $btn_default_hight/2)
 
 
 .progress--panel
-    @extend %btn
+    @extend %default_panel
     height: $progress_panel_height
-    width: calc(100% - #{2*$btn_default_width + $btn_time_width + 2*$btn_margin_outer + 3*$btn_margin_inner})
-    transform: translate($btn_default_width + $btn_margin_outer + $btn_margin_inner, ($btn_default_hight - $progress_panel_height) / 2)
+    width: calc(100% - #{2*$btn_default_width + $btn_time_width + 2*$margin_outer + 3*$margin_inner})
+    transform: translate($btn_default_width + $margin_outer + $margin_inner, ($btn_default_hight - $progress_panel_height) / 2)
 
 .progress--line
     &:hover
@@ -53,8 +53,16 @@
     height: $progress_line_height
     width: 100px
 
-    transform: translate($btn_default_width + $btn_margin_outer + $btn_margin_inner, ($btn_default_hight - $progress_line_height) / 2)
+    transform: translate($btn_default_width + $margin_outer + $margin_inner, ($btn_default_hight - $progress_line_height) / 2)
 
+
+
+.current--time--rect
+    @extend %default_panel
+    width: $btn_time_width
+    height: $btn_time_hight - 15px
+
+    transform: translate($btn_default_width + $margin_outer + $margin_inner, - $progress_line_height)
 
 
 // button polygons
@@ -62,4 +70,4 @@
     polygon
         fill: #fff
         cursor: pointer
-    transform: translate($btn_margin_outer + ($btn_default_width - $play_polygon_width)/2, $btn_default_hight/2)
+    transform: translate($margin_outer + ($btn_default_width - $play_polygon_width)/2, $btn_default_hight/2)
