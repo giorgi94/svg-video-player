@@ -37,6 +37,11 @@ mixin video(id, src)
                             rect.current--time--rect
                             //- polygon(points=current_time_polygon)
                             text.current--time--text(text-anchor="middle", alignment-baseline="central")
+                        
+                        g.preview--time--group(style="transform: translateX(80px);")
+                            rect.current--time--rect
+                            //- polygon(points=current_time_polygon)
+                            text.preview--time--text(text-anchor="middle", alignment-baseline="central")
                     
                     g.time--group
                         rect.time--rect

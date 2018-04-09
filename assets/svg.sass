@@ -1,12 +1,19 @@
 @import "variables.sass"
 
 %default_panel
-    fill: $Color
+    fill: $color
     cursor: pointer
     transition: fill 200ms
 
     &:hover
-        fill: $hover_Color
+        fill: $hover_color
+
+%text_format
+    fill: #fff
+    font:
+        size: 12px
+        family: monospace
+    pointer-events: none
 
 .play--rect
     @extend %default_panel
@@ -27,13 +34,10 @@
 
 
 .text--time
-    fill: #fff
-    font:
-        size: 12px
-        family: monospace
-    pointer-events: none
+    @extend %text_format
 
     transform: translate(calc(100% - #{$btn_time_width + $margin_inner + $margin_outer + $btn_default_width - $btn_time_width/2}), $btn_default_hight/2)
+
 
 
 .progress--panel
@@ -55,12 +59,20 @@
 
     transform: translate($btn_default_width + $margin_outer + $margin_inner, ($btn_default_hight - $progress_line_height) / 2)
 
+.current--time--text
+    @extend %text_format
+    transform: translate($btn_default_width + $margin_outer + $margin_inner + $btn_time_current_width/2, - $progress_line_height + $btn_time_current_hight/2)
 
+.preview--time--text
+    @extend .current--time--text
+
+.preview--time--group
+    opacity: 0.7
 
 .current--time--rect
     @extend %default_panel
-    width: $btn_time_width
-    height: $btn_time_hight - 15px
+    width: $btn_time_current_width
+    height: $btn_time_current_hight
 
     transform: translate($btn_default_width + $margin_outer + $margin_inner, - $progress_line_height)
 

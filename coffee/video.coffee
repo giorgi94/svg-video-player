@@ -10,6 +10,7 @@ SVGVideoPlayer = (wrapper) ->
         time:
             rect: @svg.querySelector('.time--rect')
             text: @svg.querySelector('.text--time')
+            text_current: @svg.querySelector('.current--time--text')
         progress:
             group: @svg.querySelector('.progress--group')
             panel: @svg.querySelector('.progress--panel')
@@ -66,6 +67,8 @@ SVGVideoPlayer::resize = ->
 SVGVideoPlayer::events = ->
     @buttons.play.addEventListener 'click', @play.bind(this)
     @video.addEventListener 'timeupdate', @timeUpdate.bind(this)
+
+    @buttons.progress.group.addEventListener 'click', @progress_clicked.bind(this)
 
 
 SVGVideoPlayer::play = ->
@@ -125,10 +128,15 @@ SVGVideoPlayer::timeUpdate = ->
     width = parseInt percentage * panel_rect.width
     @buttons.progress.line.style.width = "#{width}px"
 
+    @buttons.time.text_current.innerHTML = @seconds_to_time(this.video.currentTime)
 
-    # this.current.innerText = this.secondstoTime(this.video.currentTime)
 
-
+SVGVideoPlayer::progress_clicked = (event) ->
+    rect = @buttons.progress.group.getBoundingClientRect()
+    svg_rect = @svg.getBoundingClientRect()
+    # this.video.currentTime = @video.duration * event.offsetX / @buttons.progress.group.offsetWidth;
+    console.log @video.duration * (event.offsetX-svg_rect.x) / rect.width
+    # console.log event.offsetX - rect.x
 
 
 SVGVideoPlayer::changeSource = (src)->

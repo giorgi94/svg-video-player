@@ -97,8 +97,8 @@ gulp.task('coffee', () => {
     gulp.src(abspath('coffee/video.coffee'))
         .pipe(gulpif(use_sourcemaps, sourcemaps.init()))
         .pipe(coffee().on('error', console.log))
-        // .pipe(gulpif(use_babel, babel()))
-        // .pipe(gulpif(use_uglify, uglify()))
+        .pipe(gulpif(use_babel, babel().on('error', console.log)))
+        .pipe(gulpif(use_uglify, uglify().on('error', console.log)))
         .pipe(gulpif(use_sourcemaps, sourcemaps.write()))
         .pipe(gulp.dest(abspath('dist/static')))
         .pipe(gulpif(use_connect, connect.reload()));
